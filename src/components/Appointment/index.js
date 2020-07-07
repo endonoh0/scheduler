@@ -8,6 +8,7 @@ import Show from './Show';
 import Confirm from './Confirm';
 import Status from './Status';
 import Error from './Error';
+import Form from './Form';
 
 export default function Appointment(props) {
 
@@ -32,6 +33,13 @@ export default function Appointment(props) {
             <Error
                 message={props.message}
                 onClose={props.onClose}
+            />
+            <Form
+                name={props.name}
+                interviewers={props.interviewers}
+                value={props.interviewer}
+                onSave={props.onSave}
+                onCancel={props.onCancel}
             />
         </article>
     )
