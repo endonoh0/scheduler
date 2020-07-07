@@ -6,6 +6,7 @@ import Header from './Header';
 import Empty from './Empty';
 import Show from './Show';
 import Confirm from './Confirm';
+import Status from './Status';
 
 export default function Appointment(props) {
 
@@ -23,6 +24,9 @@ export default function Appointment(props) {
                 message={props.message}
                 onConfirm={props.onConfirm}
                 onCancel={props.onCancel}
+            />
+            <Status
+                message={props.message}
             />
         </article>
     )
