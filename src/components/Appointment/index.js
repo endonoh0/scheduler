@@ -7,6 +7,7 @@ import Empty from './Empty';
 import Show from './Show';
 import Confirm from './Confirm';
 import Status from './Status';
+import Error from './Error';
 
 export default function Appointment(props) {
 
@@ -27,6 +28,10 @@ export default function Appointment(props) {
             />
             <Status
                 message={props.message}
+            />
+            <Error
+                message={props.message}
+                onClose={props.onClose}
             />
         </article>
     )
