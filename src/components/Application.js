@@ -12,27 +12,31 @@ export default function Application(props) {
     const [ state, setState ] = useState({
         day: "Monday",
         days: [],
-        appointments:  {}
+        appointments:  {},
+        interviewers: {},
     });
 
   useEffect(() => {
     Promise.all([
         Promise.resolve(axios.get("api/days")),
         Promise.resolve(axios.get("api/appointments")),
-        // Promise.resolve(axios.get("api/interviewers")),
+        Promise.resolve(axios.get("api/interviewers")),
     ]).then((all) => {
         const days = all[0].data;
         const appointments = all[1].data;
-
-        setState(prev => ({...prev, days: days, appointments: appointments}))
+        const interviewers = all[2].data;
+        console.log(interviewers)
+        setState(prev => ({...prev, days: days, appointments: appointments, interviewers: interviewers}))
     })
   })
 
   const appointment = getAppointmentsForDay(state, state.day).map(appointment => {
+      const interview = getInterview(state, appointment.interview);
       return (
         <Appointment
           key={appointment.id}
           {...appointment}
+          interview={interview}
         />
       );
   });
