@@ -9,6 +9,5 @@ export function getAppointmentsForDay(state, day) {
     for (const id of filteredDay.appointments) {
         appointmentArr.push(state.appointments[id]);
     }
-    console.log('isArray', Array.isArray(appointmentArr)); // true
     return appointmentArr;
 }
