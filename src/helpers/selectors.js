@@ -28,11 +28,9 @@ export function getInterviewersForDay(state, day) {
 
     if (!filteredDay) return interviewArr;
 
-    for (const key in filteredDay) {
-        if (key === "id") {
-            const id = filteredDay[key];
+    for (const id of filteredDay.interviewers) {
             interviewArr.push(state.interviewers[id]);
         }
-    }
+
     return interviewArr;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import './styles.scss';
 import useVisualMode from "hooks/useVisualMode";
@@ -31,7 +31,7 @@ export default function Appointment(props) {
             )}
             {mode === CREATE && (
                 <Form
-                    interviewers={[]}
+                    interviewers={props.interviewers}
                     onCancel={back}
                 />
             )}
