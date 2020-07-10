@@ -9,14 +9,17 @@ import Show from './Show';
 import Form from './Form';
 import Status from './Status';
 import Confirm from './Confirm';
+import Error from './Error';
 
-const EMPTY     = "EMPTY";
-const SHOW      = "SHOW";
-const CREATE    = "CREATE";
-const SAVING    = "SAVING";
-const DELETING  = "DELETING";
-const CONFIRM   = "CONFIRM";
-const EDIT      = "EDIT";
+const EMPTY               = "EMPTY";
+const SHOW                = "SHOW";
+const CREATE              = "CREATE";
+const SAVING              = "SAVING";
+const DELETING            = "DELETING";
+const CONFIRM             = "CONFIRM";
+const EDIT                = "EDIT";
+const ERROR_SAVE          = "ERROR_SAVE";
+const ERROR_DELETE        = "ERROR_DELETE";
 
 export default function Appointment(props) {
     const { mode, transition, back } = useVisualMode(
@@ -32,9 +35,8 @@ export default function Appointment(props) {
         transition(SAVING);
 
         props.bookInterview(props.id, interview)
-            .then(() => {
-                transition(SHOW);
-            });
+            .then(() => transition(SHOW))
+            .catch(() => transition(ERROR_SAVE, true));
     }
 
     function cancel() {
@@ -46,12 +48,11 @@ export default function Appointment(props) {
     }
 
     function destroy () {
-        transition(DELETING);
+        transition(DELETING, true);
 
         props.cancelInterview(props.id)
-            .then(() => {
-                transition(EMPTY);
-            });
+            .then(() => transition(EMPTY))
+            .catch(() => transition(ERROR_DELETE, true));
     }
 
     function edit () {
@@ -64,6 +65,8 @@ export default function Appointment(props) {
             { mode === EMPTY && <Empty onAdd={() => transition(CREATE) } />}
             { mode === SAVING && <Status message={"Saving"} />}
             { mode === DELETING && <Status message={"Deleting"} />}
+            { mode === ERROR_SAVE && <Error message="Oops ... something went wrong" onClose={back}/>}
+            { mode === ERROR_DELETE && <Error message="Oops ... something went wrong" onClose={back}/>}
             { mode === SHOW && (
                 <Show
                     student={props.interview.student}
