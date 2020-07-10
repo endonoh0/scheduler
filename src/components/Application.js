@@ -45,6 +45,7 @@ const appointments = getAppointmentsForDay(state, state.day).map(
         <nav className="sidebar__menu">
             <DayList
                 days={ state.days }
+                // sports for a given ay
                 day={ state.day }
                 setDay={ setDay }
             />
