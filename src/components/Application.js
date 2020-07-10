@@ -1,12 +1,10 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-// Styles
 import "components/Application.scss";
-// Components
 import DayList from 'components/DayList';
 import Appointment from "components/Appointment";
-// Helper Functions
+
 import {
     getAppointmentsForDay,
     getInterview,
@@ -17,14 +15,25 @@ export default function Application(props) {
         day: "Monday",
         days: [],
         appointments:  {},
-        // interviewers: {},
+        interviewers: {},
     });
 
     const setDay = day => setState({ ...state, day });
 
-    function bookInterview(id, interview) {
-        console.log(id, interview);
+    function cancelInterview(id) {
+        const appointment = {
+            ...state.appointments[id],
+            interview: null
+        }
+        return axios.delete(`api/appointments/${id}`)
+            .then(() => {
+                setState({
+                    ...state, appointment
+                });
+            });
+    }
 
+    function bookInterview(id, interview) {
         const appointment = {
             ...state.appointments[id],
             interview: { ...interview }
@@ -35,10 +44,14 @@ export default function Application(props) {
             [id]: appointment
         };
 
-        setState({
-            ...state,
-            appointments
-        });
+        // update the appointment
+        return axios.put(`api/appointments/${id}`, { interview })
+            .then(() => {
+                setState({
+                    ...state,
+                    appointments
+                });
+            });
     }
 
   useEffect(() => {
@@ -65,19 +78,17 @@ export default function Application(props) {
 
 
   const appointments =  getAppointmentsForDay(state, state.day).map(appointment => {
-    // console.log(appointment)
-    //   console.log(appointment.id)
       const interview      = getInterview(state, appointment.interview);
-    //   console.log(interview);
       const interviewers   = getInterviewersForDay(state, state.day);
-    // console.log('interviewers', interviewers);
+
       return (
         <Appointment
-          key={ appointment.id} // 1
+          key={ appointment.id }
           { ...appointment }
-          interview={interview}
-          interviewers={interviewers}
+          interview={ interview }
+          interviewers={ interviewers }
           bookInterview={ bookInterview }
+          cancelInterview={ cancelInterview }
         />
       );
   });

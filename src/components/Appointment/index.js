@@ -7,47 +7,80 @@ import Header from './Header';
 import Empty from './Empty';
 import Show from './Show';
 import Form from './Form';
+import Status from './Status';
+import Confirm from './Confirm';
 
-const EMPTY = "EMPTY";
-const SHOW = "SHOW";
-const CREATE = "CREATE";
+const EMPTY     = "EMPTY";
+const SHOW      = "SHOW";
+const CREATE    = "CREATE";
+const SAVING    = "SAVING";
+const DELETING  = "DELETING";
+const CONFIRM   = "CONFIRM";
 
 export default function Appointment(props) {
     const { mode, transition, back } = useVisualMode(
         props.interview ? SHOW : EMPTY
     );
 
-    // creates a new interviewer object and passes to props.bookInterview
     function save(name, interviewer) {
         const interview = {
             student: name,
             interviewer
         };
-        // console.log(props.bookInterview);
-        props.bookInterview(props.id, interview);
-            // .then(() => transition(SHOW));
 
-        transition(SHOW);
-        // console.log(mode)
+        transition(SAVING);
+
+        props.bookInterview(props.id, interview)
+            .then(() => {
+                transition(SHOW);
+            });
     }
+
+    function cancel() {
+        confirm();
+    }
+
+    function confirm () {
+        transition(CONFIRM);
+    }
+
+    function destroy () {
+        transition(DELETING);
+
+        props.cancelInterview(props.id)
+            .then(() => {
+                transition(EMPTY);
+            });
+    }
+
+
 
     return (
         <article className="appointment">
             <Header time={props.time} />
-            {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-            {mode === SHOW && props.interview && (
+            { mode === EMPTY && <Empty onAdd={() => transition(CREATE) } />}
+            { mode === SAVING && <Status message={"Saving"} />}
+            { mode === DELETING && <Status message={"Deleting"} />}
+            { mode === SHOW && (
                 <Show
                     student={props.interview.student}
                     interviewer={props.interview.interviewer.name}
-                    onDelete={props.onDelete}
+                    onDelete={ cancel }
                     onEdit={props.onEdit}
                 />
             )}
-            {mode === CREATE && (
+            { mode === CREATE && (
                 <Form
                     interviewers={props.interviewers}
                     onCancel={back}
                     onSave={save}
+                />
+            )}
+            { mode === CONFIRM && (
+                <Confirm
+                    message="Are you sure you want to delete?"
+                    onConfirm={destroy}
+                    onCancel={back}
                 />
             )}
         </article>
