@@ -44,7 +44,6 @@ export default function Application(props) {
             [id]: appointment
         };
 
-        // update the appointment
         return axios.put(`api/appointments/${id}`, { interview })
             .then(() => {
                 setState({
