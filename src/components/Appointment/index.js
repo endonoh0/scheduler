@@ -1,7 +1,8 @@
 import React, {useEffect} from "react";
 
-import './styles.scss';
 import useVisualMode from "hooks/useVisualMode";
+
+import './styles.scss';
 
 import Header from './Header';
 import Empty from './Empty';
@@ -22,18 +23,20 @@ const ERROR_SAVE          = "ERROR_SAVE";
 const ERROR_DELETE        = "ERROR_DELETE";
 
 export default function Appointment(props) {
+    const { interview, id, time, interviewers, bookInterview, cancelInterview } = props;
+
     const { mode, transition, back } = useVisualMode(
-        props.interview ? SHOW : EMPTY
+        interview ? SHOW : EMPTY
     );
 
     useEffect(() => {
-        if (props.interview && mode === EMPTY) {
+        if (interview && mode === EMPTY) {
             transition(SHOW);
         }
-        if (props.interview === null && mode === SHOW) {
+        if (interview === null && mode === SHOW) {
             transition(EMPTY);
         }
-    }, [props.interview, transition, mode]);
+    }, [interview, transition, mode]);
 
     function save(name, interviewer) {
         const interview = {
@@ -43,25 +46,20 @@ export default function Appointment(props) {
 
         transition(SAVING);
 
-        props.bookInterview(props.id, interview)
+        bookInterview(id, interview)
             .then(() => transition(SHOW))
             .catch(() => transition(ERROR_SAVE, true));
     }
 
-    function cancel() {
-        confirm();
-    }
-
-    function confirm () {
-        transition(CONFIRM);
-    }
-
-    function destroy () {
+    function destroy() {
         transition(DELETING, true);
-
-        props.cancelInterview(props.id)
+        cancelInterview(id)
             .then(() => transition(EMPTY))
             .catch(() => transition(ERROR_DELETE, true));
+    }
+
+    function cancel() {
+        transition(CONFIRM);
     }
 
     function edit () {
@@ -70,41 +68,41 @@ export default function Appointment(props) {
 
     return (
         <article className="appointment">
-            <Header time={props.time} />
+            <Header time={time} />
             { mode === EMPTY && <Empty onAdd={() => transition(CREATE) } />}
             { mode === SAVING && <Status message={"Saving"} />}
             { mode === DELETING && <Status message={"Deleting"} />}
             { mode === ERROR_SAVE && <Error message="Oops ... something went wrong" onClose={back}/>}
             { mode === ERROR_DELETE && <Error message="Oops ... something went wrong" onClose={back}/>}
-            { mode === SHOW && props.interview && (
+            { mode === SHOW && interview && (
                 <Show
-                    student={props.interview.student}
-                    interviewer={props.interview.interviewer.name}
-                    onDelete={ cancel }
+                    student={ interview.student }
+                    interviewer={ interview.interviewer.name }
+                    onDelete={cancel}
                     onEdit={ edit }
                 />
             )}
             { mode === EDIT && (
                 <Form
-                    name={props.interview.student}
-                    value={props.interview.interviewer.id}
-                    interviewers={props.interviewers}
+                    name={ interview.student }
+                    value={ interview.interviewer.id }
+                    interviewers={ interviewers }
                     onCancel={ back }
                     onSave={ save }
                 />
             )}
             { mode === CREATE && (
                 <Form
-                    interviewers={props.interviewers}
-                    onCancel={back}
-                    onSave={save}
+                    interviewers={ interviewers }
+                    onCancel={ back }
+                    onSave={ save }
                 />
             )}
             { mode === CONFIRM && (
                 <Confirm
                     message="Are you sure you want to delete?"
-                    onConfirm={destroy}
-                    onCancel={back}
+                    onConfirm={ destroy }
+                    onCancel={ back }
                 />
             )}
         </article>
