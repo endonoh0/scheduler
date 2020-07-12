@@ -19,12 +19,11 @@ const interviewers = getInterviewersForDay(state, state.day);
 
 const appointments = getAppointmentsForDay(state, state.day).map(
     appointment => {
-    // const interview = getInterview(state, appointment.interview);
     return (
         <Appointment
             key={ appointment.id }
             { ...appointment }
-            interview={ getInterview(state, appointment.interview )}
+            interview={ getInterview(state, appointment.interview) }
             interviewers={ interviewers }
             bookInterview={ bookInterview }
             cancelInterview={ cancelInterview }
@@ -45,7 +44,6 @@ const appointments = getAppointmentsForDay(state, state.day).map(
         <nav className="sidebar__menu">
             <DayList
                 days={ state.days }
-                // sports for a given ay
                 day={ state.day }
                 setDay={ setDay }
             />
@@ -58,7 +56,6 @@ const appointments = getAppointmentsForDay(state, state.day).map(
       </section>
       <section className="schedule">
         { appointments }
-
         <Appointment key="last" time="5pm" />
       </section>
     </main>

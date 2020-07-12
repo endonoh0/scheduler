@@ -1,25 +1,7 @@
 import React, { useReducer, useEffect } from "react";
 import axios from "axios";
 
-const SET_DAY = "SET_DAY";
-const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-const SET_INTERVIEW = "SET_INTERVIEW";
-
-function reducer(state, action) {
-    switch (action.type) {
-        case SET_DAY:
-            return { ...state,  ...action.payload}
-        case SET_APPLICATION_DATA:
-            return { ...state, ...action.payload }
-        case SET_INTERVIEW: {
-            return { ...state, ...action.appointment}
-        }
-        default:
-            throw new Error(
-                `Tried to reduce with unsupported action type: ${action.type}`
-            );
-    }
-}
+import reducer, { SET_DAY, SET_APPLICATION_DATA, SET_INTERVIEW } from "../reducers/application";
 
 export default function useApplicationData() {
     const [state, dispatch] = useReducer(
@@ -45,7 +27,8 @@ export default function useApplicationData() {
                     type: SET_INTERVIEW,
                     payload: { appointment }
                 });
-            });
+            }
+        );
     }
 
     function bookInterview(id, interview) {
@@ -65,7 +48,8 @@ export default function useApplicationData() {
                     type: SET_INTERVIEW,
                     payload: { appointments }
                 });
-            });
+            }
+        );
     }
 
     useEffect(() => {
@@ -98,7 +82,7 @@ export default function useApplicationData() {
             webSocket.onmessage = (event) => {
                 const message = JSON.parse(event.data);
 
-                if (message.type === SET_INTERVIEW) {
+                if (message === SET_INTERVIEW) {
                     const interview = message.interview;
 
                     dispatch({

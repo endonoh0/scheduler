@@ -3,12 +3,13 @@ import { useState } from "react";
 export default function useVisualMode (initial) {
     const [ mode, setMode ] = useState(initial);
     const [ history, setHistory ] = useState([initial]);
+    const prevHistory = history[history.length - 1];
 
 
     function transition(newMode, replace = false) {
         if (replace) {
             setMode(newMode);
-            history[history.length - 1] =  newMode;
+            prevHistory =  newMode;
         } else {
             setMode(newMode);
             setHistory(prev => [...prev, newMode]);
@@ -16,16 +17,10 @@ export default function useVisualMode (initial) {
     }
 
     function back() {
-        if (mode === initial) return;
-
         history.pop();
-        const prevMode = history[history.length - 1];
+        const prevMode = prevHistory;
         setMode(prevMode);
     }
 
-    return {
-        mode,
-        transition,
-        back
-    }
+    return { mode, transition, back }
 }
