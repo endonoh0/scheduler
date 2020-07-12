@@ -15,7 +15,7 @@ export default function useApplicationData() {
 
     const setDay = day => dispatch({ type: SET_DAY, payload: {day} });
 
-    function cancelInterview(id) {
+    const cancelInterview = (id) => {
         const appointment = {
             ...state.appointments[id],
             interview: null
@@ -31,7 +31,7 @@ export default function useApplicationData() {
         );
     }
 
-    function bookInterview(id, interview) {
+    const bookInterview = (id, interview) => {
         const appointment = {
             ...state.appointments[id],
             interview: { ...interview }
@@ -58,9 +58,9 @@ export default function useApplicationData() {
             Promise.resolve(axios.get("api/appointments")),
             Promise.resolve(axios.get("api/interviewers")),
         ]).then((all) => {
-            const days = all[0].data;
-            const appointments = all[1].data;
-            const interviewers = all[2].data;
+            const days          = all[0].data;
+            const appointments  = all[1].data;
+            const interviewers  = all[2].data;
 
             dispatch({
                 type: SET_APPLICATION_DATA,
@@ -73,6 +73,7 @@ export default function useApplicationData() {
         });
     }, [state.appointments, state.day]);
 
+    // Connect to WebSocket server
     useEffect(() => {
         const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
@@ -81,7 +82,7 @@ export default function useApplicationData() {
 
             webSocket.onmessage = (event) => {
                 const message = JSON.parse(event.data);
-
+                // Listen to message and update the specific appointment state
                 if (message === SET_INTERVIEW) {
                     const interview = message.interview;
 
