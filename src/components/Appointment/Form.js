@@ -20,6 +20,7 @@ export default function Form(props) {
     }
 
     const save = () => {
+        // Validation
         (name === "" && !interviewer) ?
             setError("Student name and interviewer are required") :
         (name === "") ?

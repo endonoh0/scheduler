@@ -38,7 +38,7 @@ export default function Appointment(props) {
         }
     }, [interview, transition, mode]);
 
-    function save(name, interviewer) {
+    const save = (name, interviewer) => {
         const interview = {
             student: name,
             interviewer
@@ -51,18 +51,19 @@ export default function Appointment(props) {
             .catch(() => transition(ERROR_SAVE, true));
     }
 
-    function destroy() {
+    const destroy = () => {
         transition(DELETING, true);
+
         cancelInterview(id)
             .then(() => transition(EMPTY))
             .catch(() => transition(ERROR_DELETE, true));
     }
 
-    function cancel() {
+    const cancel = () => {
         transition(CONFIRM);
     }
 
-    function edit () {
+    const edit = () => {
         transition(EDIT);
     }
 
