@@ -7,6 +7,7 @@ export default function Form(props) {
     const { value, onCancel, onSave, interviewers } = props;
     const [ name, setName ] = useState(props.name || "");
     const [ interviewer, setInterviewer ] = useState(value || null);
+    const [ error, setError ] = useState("");
 
     const reset = () => {
         setName("");
@@ -19,7 +20,13 @@ export default function Form(props) {
     }
 
     const save = () => {
-        return onSave(name, interviewer)
+        (name === "" && !interviewer) ?
+            setError("Student name and interviewer are required") :
+        (name === "") ?
+            setError("Student name is required") :
+        (!interviewer) ?
+            setError("Selected an interviewer") :
+        onSave(name, interviewer)
     }
 
     return (
@@ -35,6 +42,7 @@ export default function Form(props) {
                         onChange={(event) => setName(event.target.value)}
                     />
                 </form>
+                <section className="appointment__validation">{error}</section>
                 <InterviewerList interviewers={interviewers} value={interviewer} onChange={setInterviewer} />
             </section>
             <section className="appointment__card-right">
