@@ -38,7 +38,7 @@ export default function useApplicationData() {
             ...state.appointments[id],
             interview: null
         }
-        console.log('cancelId', id);
+
         return axios.delete(`api/appointments/${id}`)
             .then(() => {
                 dispatch({
@@ -88,6 +88,27 @@ export default function useApplicationData() {
             })
         });
     }, [state.appointments, state.day]);
+
+    useEffect(() => {
+        const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
+        webSocket.onopen = (event) => {
+            webSocket.send("ping");
+
+            webSocket.onmessage = (event) => {
+                const message = JSON.parse(event.data);
+
+                if (message.type === SET_INTERVIEW) {
+                    const interview = message.interview;
+
+                    dispatch({
+                        type: SET_INTERVIEW,
+                        payload: { interview }
+                    });
+                }
+            }
+        }
+    }, [])
 
     return { state, setDay, bookInterview, cancelInterview };
 }
