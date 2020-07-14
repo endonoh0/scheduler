@@ -19,15 +19,14 @@ export default function Form(props) {
         onCancel();
     }
 
-    const save = () => {
-        // Validation
+    const validate = () => {
         (name === "" && !interviewer) ?
             setError("Student name and interviewer are required") :
         (name === "") ?
-            setError("Student name is required") :
+                setError("Student name cannot be blank") :
         (!interviewer) ?
-            setError("Selected an interviewer") :
-        onSave(name, interviewer)
+            setError("Interviewer cannot be blank") :
+        (onSave(name, interviewer) && setError(""));
     }
 
     return (
@@ -37,10 +36,11 @@ export default function Form(props) {
                     <input
                         className="appointment__create-input text--semi-bold"
                         name="name"
-                        value={name}
                         type="text"
                         placeholder="Enter Student Name"
+                        value={name}
                         onChange={(event) => setName(event.target.value)}
+                        data-testid="student-name-input"
                     />
                 </form>
                 <section className="appointment__validation">{error}</section>
@@ -49,7 +49,7 @@ export default function Form(props) {
             <section className="appointment__card-right">
                 <section className="appointment__actions">
                     <Button danger onClick={cancel}>Cancel</Button>
-                    <Button confirm onClick={save}>Save</Button>
+                    <Button confirm onClick={validate}>Save</Button>
                 </section>
             </section>
         </main>
