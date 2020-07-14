@@ -68,13 +68,13 @@ export default function Appointment(props) {
     }
 
     return (
-        <article className="appointment">
+        <article className="appointment" data-testid="appointment">
             <Header time={time} />
             { mode === EMPTY && <Empty onAdd={() => transition(CREATE) } />}
             { mode === SAVING && <Status message={"Saving"} />}
             { mode === DELETING && <Status message={"Deleting"} />}
-            { mode === ERROR_SAVE && <Error message="Oops ... something went wrong" onClose={back}/>}
-            { mode === ERROR_DELETE && <Error message="Oops ... something went wrong" onClose={back}/>}
+            { mode === ERROR_SAVE && <Error message="Oops ... cannot save" onClose={back}/>}
+            { mode === ERROR_DELETE && <Error message="Oops ... cannot delete" onClose={back}/>}
             { mode === SHOW && interview && (
                 <Show
                     student={ interview.student }
