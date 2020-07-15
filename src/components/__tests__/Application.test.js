@@ -40,7 +40,7 @@ describe("Application", () => {
         expect(getByText(appointment, "Saving"))
             .toBeInTheDocument();
 
-        // Since we're using WebSocket connection to update interview, than this test will not pass.
+        // Since we're using WebSocket connection to update interview, the test below will not pass.
 
         // await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
 
@@ -68,7 +68,7 @@ describe("Application", () => {
 
         expect(getByText(appointment, "Deleting")).toBeInTheDocument();
 
-        // Since we're using WebSocket connection to update interview, than the test below will not pass.
+        // Since we're using WebSocket connection to update interview, the test below will not pass.
 
         // await waitForElement(() => getByAltText(appointment, "Add"));
 
@@ -96,7 +96,7 @@ describe("Application", () => {
 
         expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
-        // Since we're using WebSocket connection to update interview, than the test below will not pass.
+        // Since we're using WebSocket connection to update interview, the test below will not pass.
 
         // await waitForElement(() => getByText(appointment, "Eric Ho"));
 

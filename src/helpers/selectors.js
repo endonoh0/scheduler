@@ -21,7 +21,6 @@ export function getInterviewersForDay(state, day) {
     for (const id of filteredDay.interviewers) {
         interviewArr.push(state.interviewers[id]);
     }
-
     return interviewArr;
 }
 

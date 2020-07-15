@@ -20,6 +20,5 @@ export default function useVisualMode (initial) {
         const prevMode = history[history.length - 1];
         setMode(prevMode);
     }
-
     return { mode, transition, back }
 }
