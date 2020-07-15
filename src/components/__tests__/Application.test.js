@@ -62,9 +62,7 @@ describe("Application", () => {
 
         fireEvent.click(queryByAltText(appointment, "Delete"));
 
-        expect(
-            getByText(appointment, "Are you sure you would like to delete?")
-        ).toBeInTheDocument();
+        expect(getByText(appointment, "Are you sure you want to delete?")).toBeInTheDocument();
 
         fireEvent.click(queryByText(appointment, "Confirm"));
 
@@ -145,11 +143,9 @@ describe("Application", () => {
             appointment => queryByText(appointment, "Archie Cohen")
         );
 
-        fireEvent.click(queryByAltText(appointment, "Delete"));
+        fireEvent.click(getByAltText(appointment, "Delete"));
 
-        expect(
-            getByText(appointment, "Are you sure you want to delete?")
-        ).toBeInTheDocument();
+        expect(getByText(appointment, "Are you sure you want to delete?")).toBeInTheDocument();
 
         axios.delete.mockRejectedValueOnce();
 
