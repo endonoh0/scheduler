@@ -4,9 +4,9 @@ A single-page web application that allows users to book, edit, and cancel interv
 
 This project has support for WebSocket connections - when a user creates or deletes an appointment, it updates the schedule across all interfaces in real-time.
 
-**Test:** Jest, Cypress
-**Back-End:** Node, Express, PostgreSQL
-**Front-End:** React, Storybook, Sass, WebSockets
+- **Test:** Jest, Cypress
+- **Back-End:** Node, Express, PostgreSQL
+- **Front-End:** React, Storybook, Sass, WebSockets
 
 # Website
 
@@ -14,9 +14,11 @@ This project has support for WebSocket connections - when a user creates or dele
 
 # Screenshots
 
-!["Screenshot of appointment form](docs/appointment-form.png)
-!["Screenshot of booking an appointment](docs/appointment-book.png)
-!["Screenshot of options for editing or deleting an appointment](docs/appointment-edit-or-delete.png)
+!["Screenshot of appointment form](https://github.com/endonoh0/scheduler/blob/master/docs/appointment-edit-or-delete.png?raw=true)
+
+!["Screenshot of booking an appointment](https://github.com/endonoh0/scheduler/blob/master/docs/appointment-book.png?raw=true)
+
+!["Screenshot of options for editing or deleting an appointment](https://github.com/endonoh0/scheduler/blob/master/docs/appointment-edit-or-delete.png?raw=true)
 
 # Installation
 
