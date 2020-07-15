@@ -14,8 +14,6 @@ This project has support for WebSocket connections - when a user creates or dele
 
 # Screenshots
 
-!["Screenshot of appointment form](https://github.com/endonoh0/scheduler/blob/master/docs/appointment-edit-or-delete.png?raw=true)
-
 !["Screenshot of booking an appointment](https://github.com/endonoh0/scheduler/blob/master/docs/appointment-book.png?raw=true)
 
 !["Screenshot of options for editing or deleting an appointment](https://github.com/endonoh0/scheduler/blob/master/docs/appointment-edit-or-delete.png?raw=true)
