@@ -1,7 +1,5 @@
 # Interview Scheduler
 
-[![LighthouseLabs](https://circleci.com/gh/endonoh0/interview-scheduler.svg?style=svg)](https://circleci.com/github/endonoh0/scheduler)
-
 A single-page web application that allows users to book, edit, and cancel interviews.
 
 This project use WebSockets to allow multiple users to manage the application. Users have the ability to update the schedule across all connections in real-time.
