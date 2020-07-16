@@ -1,8 +1,10 @@
 # Interview Scheduler
 
+[![LighthouseLabs](https://circleci.com/gh/endonoh0/interview-scheduler.svg?style=svg)](https://circleci.com/github/endonoh0/scheduler)
+
 A single-page web application that allows users to book, edit, and cancel interviews.
 
-This project has support for WebSocket connections - when a user creates or deletes an appointment, it updates the schedule across all interfaces in real-time.
+This project use WebSockets to allow multiple users to manage the application. Users have the ability to update the schedule across all connections in real-time.
 
 - **Test:** Jest, Cypress
 - **Back-End:** Node, Express, PostgreSQL
