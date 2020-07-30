@@ -14,7 +14,11 @@ This project use WebSockets to allow multiple users to manage the application. U
 
 # Screenshots
 
+## Booking an Appointment
+
 !["Screenshot of booking an appointment](https://github.com/endonoh0/scheduler/blob/master/docs/appointment-book.png?raw=true)
+
+## Edit or Delete an Appointment
 
 !["Screenshot of options for editing or deleting an appointment](https://github.com/endonoh0/scheduler/blob/master/docs/appointment-edit-or-delete.png?raw=true)
 
